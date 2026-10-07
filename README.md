@@ -28,8 +28,14 @@ First verify the simulator, ICP, mapping, and MPC with an explicit simulator ins
 uv run --extra gpu reactive-franka --perception sim-mask
 ```
 
-For the complete YOLO pipeline, adapt the pretrained segmentation network to this
-simple rendered cup, then use its weights:
+The trained YOLO weights are included at `weights/cup-handle-seg.pt` and selected by
+default. Run from the repository root; no retraining is needed:
+
+```bash
+uv run --extra gpu --extra vision reactive-franka
+```
+
+Optional: regenerate the training data and retrain for a changed scene or camera:
 
 ```bash
 uv run --extra vision python -m reactive_franka.train --output outputs/training-handle
@@ -48,7 +54,7 @@ GUI is the default. Stop with Ctrl-C. For bounded headless verification:
 
 ```bash
 uv run --extra gpu --extra vision reactive-franka --headless --fast \
-  --weights outputs/training-handle/cup-seg/weights/best.pt --steps 2400 --cycles 2
+  --steps 2400 --cycles 2
 ```
 
 `--steps 0` runs continuously. The loop logs **pick → place → go_home → pick**.
@@ -151,9 +157,9 @@ grasps, rotated-handle pickup and placement, fixed-camera cup visibility at both
 and travel endpoints, XYZ-only updates when handle yaw is hidden, moving-target tracking,
 cycle ordering, and the CUDA mapping regression.
 Run artifacts are under `outputs/handle-grasp/`, including `handle-grasp.png` captured at
-successful attachment. Weights trained for this camera are under
-`outputs/training-handle/cup-seg/weights/best.pt`; use these instead of weights trained
-for the previous viewpoint. These outputs are generated and gitignored.
+successful attachment. The validated weights for this camera are bundled at
+`weights/cup-handle-seg.pt`. Training runs, datasets, and simulation outputs remain
+generated and gitignored; the bundled weights are tracked in Git.
 
 ## Scope and limitations
 

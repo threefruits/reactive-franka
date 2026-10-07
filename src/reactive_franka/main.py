@@ -25,7 +25,7 @@ def parse_args():
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--controller", choices=["curobo", "bullet-ik"], default="curobo")
     parser.add_argument("--perception", choices=["yolo", "sim-mask"], default="yolo")
-    parser.add_argument("--weights", default="yolo11n-seg.pt")
+    parser.add_argument("--weights", default="weights/cup-handle-seg.pt")
     parser.add_argument("--confidence", type=float, default=0.25)
     parser.add_argument(
         "--steps", type=int, default=0, help="30 Hz control steps; 0 runs continuously"
